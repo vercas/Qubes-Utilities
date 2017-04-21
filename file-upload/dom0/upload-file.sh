@@ -22,7 +22,7 @@ YOURLS_KEY=$(cat ~/.yourls.key)
 FILE_REGEX="^FILE:\\s*(.*)$"
 URL_REGEX="^https://s\\.vercas\\.com/(.*)$"
 
-VMS=(insert vm names here)
+VMS=(personal-benign personal)
 
 #################
 #   VM selection.
@@ -69,7 +69,7 @@ fi
 #   Shortening the URL.
 
 TIME=$(date +%s)
-SIGN=$(echo -n "${TIME}#{YOURLS_KEY}" | md5sum | head -c 32)
+SIGN=$(echo -n "${TIME}${YOURLS_KEY}" | md5sum | head -c 32)
 URL="https://u.vercas.com/${FILE}"
 
 ACT="https://s.vercas.com/yourls-api.php?timestamp=${TIME}&signature=${SIGN}&action=shorturl&format=simple&url=${URL}"
@@ -93,6 +93,6 @@ echo -e "https://s.vercas.com/\e[7m${SHORT}\e[27m"
 #####################################
 #   Insert into Qubes clipboard (3.1)
 
-echo "https://s.vercas.com/${SHORT}" > /var/run/qubes/qubes-clipboard.bin
+echo -n "https://s.vercas.com/${SHORT}" > /var/run/qubes/qubes-clipboard.bin
 echo "dom0" > /var/run/qubes/qubes-clipboard.bin.source
 
